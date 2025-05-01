@@ -1,34 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React,{ useState } from 'react'
+
 import './App.css'
+import Notification from './Notification'
+import ThemeToggleButton from './ThemeToggle'
+import ThemedComponent from './ThemeComp'
+import { ThemeProvider } from './ThemeContext'
+import ControlledComp from './ControlledComp'
+import UnControlledComp from './UnControlledComp'
+import ErrorBoundary from './ErrorBoundary'
+
+function BuggyComp(){
+  throw new Error('Simulated Crash')
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [modalOpen, setModalOpen] = useState(false)
+  let [crash,setCrash]=useState(false)
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+  
+   <ThemeProvider>
+    <div className="App">
+      <ThemeToggle/>
+      <button onClick={()=>setModalOpen(true)}>Open</button>
+      {modalOpen&&<Notification close={()=>setModalOpen(false)}/>}
+
+        <h2>Controlled Form</h2>
+        <ControlledComp />
+
+        <h2>UnControlled Form</h2>
+        <UnControlledComp />
+
+        <h2>Crash Test</h2>
+        <ErrorBoundary>
+          {crash?<BuggyComp/> : <button onClick={() => setCrash(true)}>Crash App</button>}
+        </ErrorBoundary>
+    </div>
+   </ThemeProvider>
+ 
+  
   )
 }
 
