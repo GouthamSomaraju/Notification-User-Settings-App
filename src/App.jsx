@@ -1,9 +1,7 @@
 import React,{ useState } from 'react'
 
-import './App.css'
+// import './App.css'
 import Notification from './Notification'
-import ThemeToggleButton from './ThemeToggle'
-import ThemedComponent from './ThemeComp'
 import { ThemeProvider } from './ThemeContext'
 import ControlledComp from './ControlledComp'
 import UnControlledComp from './UnControlledComp'
