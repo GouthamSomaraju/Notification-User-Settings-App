@@ -1,43 +1,47 @@
-import React,{ useState } from 'react'
+import React, { useState } from 'react';
+import Notification from './Notification';
+import { ThemeProvider } from './ThemeContext';
+import ControlledComp from './ControlledComp';
+import UnControlledComp from './UnControlledComp';
+import ErrorBoundary from './ErrorBoundary';
+import { ThemeToggle } from './ThemeToggle';
+import './App.css'
 
-// import './App.css'
-import Notification from './Notification'
-import { ThemeProvider } from './ThemeContext'
-import ControlledComp from './ControlledComp'
-import UnControlledComp from './UnControlledComp'
-import ErrorBoundary from './ErrorBoundary'
-
-function BuggyComp(){
-  throw new Error('Simulated Crash')
+function BuggyComp() {
+  throw new Error('Simulated Crash');
 }
 
 function App() {
-  const [modalOpen, setModalOpen] = useState(false)
-  let [crash,setCrash]=useState(false)
+  const [modalOpen, setModalOpen] = useState(false);
+  const [crash, setCrash] = useState(false);
 
   return (
-  
-   <ThemeProvider>
-    <div className="App">
-      <ThemeToggle/>
-      <button onClick={()=>setModalOpen(true)}>Open</button>
-      {modalOpen&&<Notification close={()=>setModalOpen(false)}/>}
+    <ThemeProvider>
+      <div className="App">
+        <ThemeToggle />
+        <button onClick={() => setModalOpen(true)}>Open Modal</button>
+
+        {modalOpen && (
+          <Notification open={modalOpen} close={() => setModalOpen(false)} />
+        )}
 
         <h2>Controlled Form</h2>
         <ControlledComp />
 
-        <h2>UnControlled Form</h2>
+        <h2>Uncontrolled Form</h2>
         <UnControlledComp />
 
         <h2>Crash Test</h2>
         <ErrorBoundary>
-          {crash?<BuggyComp/> : <button onClick={() => setCrash(true)}>Crash App</button>}
+          {crash ? (
+            <BuggyComp />
+          ) : (
+            <button onClick={() => setCrash(true)}>Crash App</button>
+          )}
         </ErrorBoundary>
-    </div>
-   </ThemeProvider>
- 
-  
-  )
+      </div>
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;

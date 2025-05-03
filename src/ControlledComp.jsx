@@ -6,15 +6,15 @@ const ControlledComp = () => {
 
     let handleSubmit=(event)=>{
         event.preventDefault()
-        console.log('Name:',name,'Email:',email);
+        console.log('Controlled Form','Name:',name,'Email:',email);
         
     }
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input type="text" value={name} onChange={(e)=>setName(e.target.value)} />
-        <input type="email" value={email} onChange={(e)=>setemail(e.target.value)} />
+        <input type="text" value={name} placeholder='Name' onChange={(e)=>setName(e.target.value)} />
+        <input type="email" value={email} placeholder='Email' onChange={(e)=>setemail(e.target.value)} />
         <button type='submit'>Submit</button>
       </form>
     </div>
